@@ -1,0 +1,1 @@
+[31mFATAL  [0m[2024-07-16T18:29:38+03:00]db.go:27 zeroagencytest/pkg/db.New() SQL Pingdial tcp :6033: connectex: No connection could be made because the target machine actively refused it. 

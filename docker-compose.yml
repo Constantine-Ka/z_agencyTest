@@ -1,0 +1,55 @@
+version: '6'
+
+services:
+
+  db:
+    image: mysql:8.0.35-debian
+    container_name: db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: app_db
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin1111
+
+    ports:
+      - "6033:3306"
+    volumes:
+      - ./dbdata:/var/lib/mysql
+    restart: always
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: pma-0
+
+    links:
+      - db
+
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+
+    restart: always
+
+    ports:
+      - "8081:80"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+  demoservice:
+    build:
+      context: .
+      dockerfile: build/Dockerfile
+    depends_on:
+      - db
+    environment:
+      - APP_PORT=3000
+      - MYSQL_HOST=db
+      - MYSQL_DATABASE=app_db
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=admin1111
+      - MYSQL_PORT=3306
+      - MYSQL_ROOT_PASSWORD=1234
+    links:
+      - db
+    ports:
+      - "3000:3000"

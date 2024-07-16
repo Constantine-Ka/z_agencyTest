@@ -1,0 +1,12 @@
+POST /edit/64 HTTP/1.1
+Host: 127.0.0.1:3000
+Content-Type: application/json
+Authorization: Basic dXNlcjoxMjM0NTY=
+Content-Length: 112
+
+{
+  "Id": 64,
+  "Title": "Lorem ipsum",
+  "Content": "Dolor sit amet <b>foo</b>",
+  "Categories": [1,2,15]
+}
